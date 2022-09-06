@@ -53,6 +53,24 @@ ggplot(unit, aes(x = Income_level, y = Total_BG_Plants)) +
   geom_jitter() +
   theme_minimal()
 
+# Racial diversity/homogeneity 
+boxplot(Total_BG_Plants + 1 ~ Racial_Diversity_level, data = unit, log = "y",
+        varwidth = TRUE, ylab = "log(BG count + 1)", xlab = "Racial diversity")
+
+# Invasion level (levels are mostly correct)
+boxplot(Total_BG_Plants + 1 ~ Invasion_level, data = unit, log = "y",
+        varwidth = TRUE, ylab = "log(BG count + 1)", xlab = "Invasion level")
+
+# Unit area
+plot(Total_BG_Plants + 1 ~ m2, data = unit, log = "y",
+    ylab = "log(BG count + 1)", xlab = "m2")
+
+plot(Total_BG_Plants ~ m2, data = unit,
+     ylab = "log(BG count + 1)", xlab = "m2")
+
+ggplot(unit, aes(x = m2, y = Total_BG_Plants)) +
+  geom_point() +
+  theme_bw()
 
 
 # Remove Block 15, which had 917 plants
