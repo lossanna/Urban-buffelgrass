@@ -3,8 +3,8 @@ library(tidyverse)
 
 # Load data ---------------------------------------------------------------
 
-street <- read_xlsx("Neighborhood-data_LO.xlsx", sheet = "By street")
-unit <- read_xlsx("Neighborhood-data_LO.xlsx", sheet = "Combined Samples")
+street <- read_xlsx("data/Neighborhood-data_LO.xlsx", sheet = "By street")
+unit <- read_xlsx("data/Neighborhood-data_LO.xlsx", sheet = "Combined Samples")
 
 
 # Basic data wrangling ----------------------------------------------------
@@ -16,8 +16,17 @@ unit <- unit %>%
 
 # Visualize ---------------------------------------------------------------
 
-hist(street$BG_Plants, breaks = 50)
 hist(unit$Total_BG_Plants, breaks = 50)
+hist(street$BG_Plants, breaks = 50)
+
+
+ggplot(unit, aes(x = Total_BG_Plants)) +
+  geom_histogram() +
+  scale_x_log10()
+
+ggplot(street, aes(x = BG_Plants)) +
+  geom_histogram() +
+  scale_x_log10()
 
 
 # By each street
@@ -92,6 +101,6 @@ ggplot(street.rm15, aes(x = Street_type, y = BG_Plants)) +
 
 # Attempt at GLM ----------------------------------------------------------
 
-bg.alley <- glm(Total_BG_Plants ~ Alley + Neighborhood_only,
+bg.alley <- glm(Total_BG_Plants ~ Alley * Neighborhood_only,
                    data = unit, family = "poisson")
 summary(bg.alley)
